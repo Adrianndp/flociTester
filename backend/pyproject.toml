@@ -7,7 +7,12 @@ authors = [
     { name = "Adrian", email = "adrianndp@hotmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "boto3>=1.44.12",
+    "fastapi>=0.165.0",
+    "python-multipart>=0.0.34",
+    "uvicorn[standard]>=0.54.0",
+]
 
 [project.scripts]
 backend = "backend:main"
