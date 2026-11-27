@@ -1,10 +1,13 @@
 services:
   floci:
     image: floci/floci:latest
+    user: root
     ports:
       - "4566:4566"
     environment:
       FLOCI_HOSTNAME: floci
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   backend:
     build: ./backend
