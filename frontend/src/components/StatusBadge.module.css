@@ -1,0 +1,29 @@
+.badge {
+  composes: badge from '../styles/controls.module.css';
+  border: 1px solid var(--border);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+.neutral {
+  composes: badge;
+}
+
+.success {
+  composes: badge;
+  background: var(--success-subtle);
+  border-color: var(--success-border);
+  color: var(--success);
+}
+
+.danger {
+  composes: badge;
+  background: var(--danger-subtle);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}

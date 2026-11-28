@@ -1,0 +1,36 @@
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-md);
+  background: var(--danger-subtle);
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-top: var(--space-0-5);
+  color: var(--danger);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-weight: var(--weight-semibold);
+  color: var(--text);
+}
+
+.message {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.retry {
+  composes: btn secondary sm from '../styles/controls.module.css';
+  flex-shrink: 0;
+}
