@@ -1,9 +1,9 @@
 import type { UseQueryResult } from '@tanstack/react-query'
-import { RefreshCw } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { API_BASE } from '../api'
 import { ErrorState } from './ErrorState'
 import { Loading } from './Loading'
+import { RefreshButton } from './RefreshButton'
 import styles from './ResultCard.module.css'
 
 type Props<T extends object> = {
@@ -28,16 +28,7 @@ export function ResultCard<T extends object>({ title, endpoint, query, aside }: 
           <code className={styles.endpoint}>GET {API_BASE}{endpoint}</code>
         </div>
         {aside}
-        <button
-          type="button"
-          className={styles.refresh}
-          onClick={retry}
-          disabled={isFetching}
-          aria-label={`Refresh ${title}`}
-          title="Refresh"
-        >
-          <RefreshCw size={14} className={isFetching ? styles.spinning : undefined} />
-        </button>
+        <RefreshButton label={title} fetching={isFetching} onClick={retry} />
       </header>
 
       <div className={styles.body}>

@@ -43,6 +43,17 @@
   font-size: var(--text-sm);
 }
 
+/* One per view: the page's main action. White text sits on --accent (brand-600). */
+.primary {
+  background: var(--accent);
+  color: var(--text-on-brand);
+  box-shadow: var(--shadow-xs);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
 .secondary {
   background: var(--bg-surface);
   color: var(--text);
@@ -94,6 +105,11 @@
   border: 2px solid var(--border-strong);
   border-top-color: var(--accent);
   border-radius: var(--radius-full);
+  animation: spin var(--spin) linear infinite;
+}
+
+/* Rotate anything (e.g. a Lucide icon) like the spinner */
+.spinning {
   animation: spin var(--spin) linear infinite;
 }
 

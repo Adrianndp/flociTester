@@ -1,0 +1,11 @@
+.button {
+  composes: btn primary from '../styles/controls.module.css';
+}
+
+.spinning {
+  composes: spinning from '../styles/controls.module.css';
+}
+
+.input {
+  display: none;
+}
