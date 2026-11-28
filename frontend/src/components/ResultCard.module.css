@@ -1,0 +1,78 @@
+.card {
+  composes: surface from '../styles/controls.module.css';
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.heading {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+}
+
+.title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+.endpoint {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.refresh {
+  composes: btn ghost sm from '../styles/controls.module.css';
+  width: var(--control-height-sm);
+  padding: 0;
+}
+
+.spinning {
+  animation: spin var(--spin) linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.body {
+  padding: var(--space-5);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: var(--loading-min);
+  justify-content: center;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: minmax(80px, 160px) 1fr;
+  gap: var(--space-4);
+  align-items: baseline;
+}
+
+.key {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
