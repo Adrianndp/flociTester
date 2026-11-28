@@ -1,4 +1,4 @@
-import { useS3Files, useUploadS3File } from '../api'
+import { s3FileDownloadUrl, useS3Files, useUploadS3File } from '../api'
 import { ErrorState } from '../components/ErrorState'
 import { FileList } from '../components/FileList'
 import { FileUploadButton } from '../components/FileUploadButton'
@@ -26,7 +26,7 @@ export function S3Page() {
         />
       )}
 
-      <FileList query={files} />
+      <FileList query={files} downloadUrl={(file) => s3FileDownloadUrl(file.key)} />
     </>
   )
 }

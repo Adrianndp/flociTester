@@ -1,7 +1,5 @@
 .refresh {
-  composes: btn ghost sm from '../styles/controls.module.css';
-  width: var(--control-height-sm);
-  padding: 0;
+  composes: btn ghost iconSm from '../styles/controls.module.css';
   flex-shrink: 0;
 }
 

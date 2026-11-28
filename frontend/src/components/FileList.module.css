@@ -99,3 +99,37 @@
 .table td.meta {
   color: var(--text-muted);
 }
+
+/* Row actions show on hover/focus, and stay visible on touch screens. */
+.table td.actions {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: var(--space-3);
+}
+
+.rowAction {
+  composes: btn ghost iconSm from '../styles/controls.module.css';
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease), background var(--duration-fast) var(--ease);
+}
+
+.table tbody tr:hover .rowAction,
+.table tbody tr:focus-within .rowAction {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .rowAction {
+    opacity: 1;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

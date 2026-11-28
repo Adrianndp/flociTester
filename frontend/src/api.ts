@@ -61,6 +61,10 @@ export const useHealth = () =>
 
 const s3FilesKey = ['s3', 'files']
 
+/** Link target that downloads one file (the backend streams it as an attachment). */
+export const s3FileDownloadUrl = (key: string) =>
+  `${API_BASE}${endpoints.s3Files}/${key.split('/').map(encodeURIComponent).join('/')}`
+
 export const useS3Files = () =>
   useQuery({ queryKey: s3FilesKey, queryFn: () => request<S3File[]>(endpoints.s3Files) })
 

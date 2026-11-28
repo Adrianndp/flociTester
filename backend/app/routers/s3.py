@@ -1,10 +1,12 @@
 import os
 from datetime import datetime
+from urllib.parse import quote
 
 import boto3
 from boto3.exceptions import S3UploadFailedError
 from botocore.exceptions import ClientError
 from fastapi import APIRouter, HTTPException, UploadFile
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/s3", tags=["s3"])
@@ -68,3 +70,28 @@ def upload_file(file: UploadFile):
     except (ClientError, S3UploadFailedError) as error:
         raise aws_error(error)
     return S3File(key=key, size=head["ContentLength"], last_modified=head["LastModified"])
+
+
+def attachment_header(key: str) -> str:
+    """Content-Disposition for a download; filename* carries non-ASCII names (RFC 6266)."""
+    name = key.rsplit("/", 1)[-1]
+    fallback = name.encode("ascii", "replace").decode().replace('"', "_").replace("\\", "_")
+    return f"attachment; filename=\"{fallback}\"; filename*=UTF-8''{quote(name)}"
+
+
+@router.get("/files/{key:path}", response_class=StreamingResponse)
+def download_file(key: str):
+    try:
+        obj = s3.get_object(Bucket=BUCKET, Key=key)
+    except ClientError as error:
+        if error.response.get("Error", {}).get("Code") in ("NoSuchKey", "404"):
+            raise HTTPException(status_code=404, detail=f"No file named {key}")
+        raise aws_error(error)
+    return StreamingResponse(
+        obj["Body"].iter_chunks(),
+        media_type=obj.get("ContentType") or "application/octet-stream",
+        headers={
+            "Content-Disposition": attachment_header(key),
+            "Content-Length": str(obj["ContentLength"]),
+        },
+    )

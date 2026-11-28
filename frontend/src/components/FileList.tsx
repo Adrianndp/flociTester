@@ -1,5 +1,5 @@
 import type { UseQueryResult } from '@tanstack/react-query'
-import { File, FolderOpen } from 'lucide-react'
+import { Download, File, FolderOpen } from 'lucide-react'
 import type { S3File } from '../api'
 import { formatBytes, formatDate } from '../format'
 import { EmptyState } from './EmptyState'
@@ -10,10 +10,12 @@ import { RefreshButton } from './RefreshButton'
 
 type Props = {
   query: UseQueryResult<S3File[], Error>
+  /** URL that downloads a file; adds a download link to each row. */
+  downloadUrl?: (file: S3File) => string
 }
 
 /** Card with the bucket's files: loading, error, empty or a name/size/date table. */
-export function FileList({ query }: Props) {
+export function FileList({ query, downloadUrl }: Props) {
   const { data, error, isPending, isError, isFetching, refetch } = query
   const retry = () => void refetch()
 
@@ -43,6 +45,11 @@ export function FileList({ query }: Props) {
                 <th scope="col">Name</th>
                 <th scope="col" className={styles.numeric}>Size</th>
                 <th scope="col">Last modified</th>
+                {downloadUrl && (
+                  <th scope="col">
+                    <span className={styles.srOnly}>Actions</span>
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -58,6 +65,19 @@ export function FileList({ query }: Props) {
                   <td className={styles.meta}>
                     <time dateTime={file.last_modified}>{formatDate(file.last_modified)}</time>
                   </td>
+                  {downloadUrl && (
+                    <td className={styles.actions}>
+                      <a
+                        href={downloadUrl(file)}
+                        download={file.key.split('/').pop()}
+                        className={styles.rowAction}
+                        aria-label={`Download ${file.key}`}
+                        title="Download"
+                      >
+                        <Download size={14} />
+                      </a>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
